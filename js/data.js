@@ -401,7 +401,7 @@ STS.CARDS = {
   acrobatics: {
     id:'acrobatics', name:'Acrobatics', type:'skill', rarity:'common', for:'silent',
     cost:1, icon:'🤸',
-    desc: u => `Draw ${u?3:3} cards. Discard 1 card.`,
+    desc: u => `Draw ${u?4:3} cards. Discard 1 card.`,
     play(ctx, card) {
       ctx.draw(card.upgraded ? 4 : 3);
       ctx.discardFromHand(1);
@@ -1454,7 +1454,7 @@ STS.EVENTS = [
     desc: 'You find a grand library. The books whisper secrets to you.',
     choices: [
       {
-        text: 'Read a book (Sleep, then draw 7 cards)',
+        text: 'Read a book (Sleep, then add 7 random cards to your deck)',
         effect(ctx) {
           const cards = ctx.pickRandomCards(7, 'all', false);
           cards.forEach(c => ctx.addCardToDeck(c.id, false));
@@ -1506,7 +1506,7 @@ STS.EVENTS = [
           const r = Math.random();
           if (r < 0.33) { ctx.healHp(12); ctx.notify('Delicious! Healed 12 HP.'); }
           else if (r < 0.66) { ctx.loseHpDirect(6); ctx.notify('Poison! Lost 6 HP.'); }
-          else { ctx.addCardToDeck('neutralize', false); ctx.notify('Strange knowledge...'); }
+          else { ctx.addCardToDeck('swift_strike', false); ctx.notify('Strange knowledge...'); }
         },
         result: 'You munch the mushrooms...'
       },

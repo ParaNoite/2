@@ -195,14 +195,19 @@ STS.Combat = (function() {
     p.cardsPlayedThisTurn = 0;
     p.flags = {};
 
-    // Clear per-turn statuses
+    // Clear per-turn statuses — restore any temp-strength first
+    const tempStr = getStatus(p, 'temp-strength');
+    if (tempStr > 0) {
+      addStatus(p, 'strength', tempStr); // restore strength lost from Dark Shackles etc.
+    }
     ['entangled', 'rage', 'double-tap', 'burst', 'phantasmal', 'temp-strength'].forEach(s => {
       delete p.statuses[s];
     });
 
     // Snecko Eye: randomize costs
     if (STS.Game.hasRelic('snecko_eye')) {
-      p.drawPile.concat(p.hand).forEach(c => { c.tempCost = Math.floor(Math.random() * 4); });
+      p.drawPile.forEach(c => { c.tempCost = Math.floor(Math.random() * 4); });
+      p.hand.forEach(c => { c.tempCost = Math.floor(Math.random() * 4); });
     }
 
     // Apply next-turn-energy

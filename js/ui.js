@@ -127,7 +127,6 @@ STS.UI = (function() {
       .map(([k, v]) => {
         const def = STATUS_DEFS[k] || { label: k, tip: k };
         const cls = `status-${k}`;
-        const sign = v > 0 ? '' : '';
         return `<span class="status-badge ${cls}" data-tip="${def.tip}: ${v}">${def.label} ${v}</span>`;
       }).join('');
   }
@@ -802,7 +801,7 @@ STS.UI = (function() {
       <div class="overlay-panel" style="min-width:600px">
         <div class="overlay-title">💰 Shop</div>
         <div class="overlay-close" id="shop-close">✕</div>
-        <div style="text-align:right;margin-bottom:12px;font-size:16px;color:#f5a623">💰 ${gold} Gold</div>
+        <div id="shop-gold-display" style="text-align:right;margin-bottom:12px;font-size:16px;color:#f5a623">💰 ${gold} Gold</div>
 
         <div class="shop-section">
           <h3>Cards</h3>
@@ -874,7 +873,7 @@ STS.UI = (function() {
         el.style.opacity = '0.3';
         el.style.pointerEvents = 'none';
         el.querySelector('.shop-price').textContent = '✓ Purchased';
-        document.querySelector('.overlay-panel').querySelector('[style*="Gold"]').textContent = `💰 ${STS.Game.gold} Gold`;
+        document.getElementById('shop-gold-display').textContent = `💰 ${STS.Game.gold} Gold`;
         notify(`Purchased: ${c.name}`);
       };
     });
